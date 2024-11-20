@@ -41,7 +41,7 @@ export const login = async (req, res) => {
 
 // register
 export const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, confirmPassword } = req.body;
 
   // empty fields
   if (!name) {
@@ -54,6 +54,13 @@ export const register = async (req, res) => {
     return res
       .status(400)
       .json({ error: { password: 'Password is required' } });
+  }
+
+  // confirm password
+  if (password !== confirmPassword) {
+    return res
+      .status(400)
+      .json({ error: { confirmPassword: 'Passwords do not match' } });
   }
 
   // email format
