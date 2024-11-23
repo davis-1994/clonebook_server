@@ -114,31 +114,5 @@ export const register = async (req, res) => {
 
 // me
 export const getMe = async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
-
-  // empty token
-  if (!token) {
-    return res.status(401).json({ error: 'Unauthorized, no token' });
-  }
-
-  try {
-    // verify token
-    const {
-      payload: { id },
-    } = await jwtVerify(
-      token,
-      new TextEncoder().encode(process.env.JWT_SECRET)
-    );
-
-    // find user
-    const user = await User.findById(id).select('-password');
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    // send response
-    res.status(200).json({ user });
-  } catch (error) {
-    res.status(401).json({ error: 'Unauthorized error in try catch' });
-  }
+  res.status(200).json({ user: req.user });
 };

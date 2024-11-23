@@ -5,6 +5,7 @@ import cors from 'cors';
 import connectDB from './dbConnect.js';
 
 import authRouter from './routes/auth-routes.js';
+import postsRouter from './routes/posts-routes.js';
 
 // Load environment variables
 configDotenv();
@@ -21,6 +22,7 @@ await connectDB();
 
 // routes
 app.use('/api/auth', authRouter);
+app.use('/api/posts', postsRouter);
 
 // start server
 app.listen(process.env.PORT, () => {
